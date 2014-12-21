@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Practica3Acelerometro</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="valX">Valor de X: </string>
+    <string name="valY">Valor de Y: </string>
+    <string name="valZ">Valor de Z: </string>
+    <string name="BtnGravedad">Buscar equilibrio</string>
+    <string name="TextoAyuda">Mueva su teléfono hasta que los tres ejes soporten una fuerza de gravedad similar</string>
+    <string name="BtnAccidente">Control de accidente</string>
+
+</resources>
