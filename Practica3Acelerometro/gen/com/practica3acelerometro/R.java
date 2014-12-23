@@ -1649,7 +1649,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f060030;
         public static final int action_mode_bar_stub=0x7f06002f;
         public static final int action_mode_close_button=0x7f060022;
-        public static final int action_settings=0x7f060047;
+        public static final int action_settings=0x7f06004d;
         public static final int activity_chooser_view_content=0x7f060023;
         public static final int always=0x7f06000d;
         public static final int beginning=0x7f060012;
@@ -1704,6 +1704,12 @@ containing a value of this type.
         public static final int txtAccX=0x7f060041;
         public static final int txtAccY=0x7f060042;
         public static final int txtAccZ=0x7f060043;
+        public static final int txtmayX=0x7f060047;
+        public static final int txtmayY=0x7f060049;
+        public static final int txtmayZ=0x7f06004b;
+        public static final int txtmenX=0x7f060048;
+        public static final int txtmenY=0x7f06004a;
+        public static final int txtmenZ=0x7f06004c;
         public static final int up=0x7f060018;
         public static final int useLogo=0x7f060005;
         public static final int withText=0x7f06000e;
@@ -1765,13 +1771,14 @@ containing a value of this type.
         public static final int practica3_acelerometro=0x7f0d0000;
     }
     public static final class raw {
-        public static final int ringout=0x7f050000;
+        public static final int alerta=0x7f050000;
         public static final int tada=0x7f050001;
     }
     public static final class string {
-        public static final int BtnAccidente=0x7f0b0017;
+        public static final int BtnAccidente=0x7f0b0018;
         public static final int BtnGravedad=0x7f0b0015;
-        public static final int TextoAyuda=0x7f0b0016;
+        public static final int TextoAyudaAccidente=0x7f0b0017;
+        public static final int TextoAyudaGravedad=0x7f0b0016;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f0b0001;
@@ -1828,6 +1835,12 @@ containing a value of this type.
         public static final int action_settings=0x7f0b0011;
         public static final int app_name=0x7f0b000f;
         public static final int hello_world=0x7f0b0010;
+        public static final int mayX=0x7f0b001b;
+        public static final int mayY=0x7f0b001d;
+        public static final int mayZ=0x7f0b0019;
+        public static final int menX=0x7f0b001c;
+        public static final int menY=0x7f0b001e;
+        public static final int menZ=0x7f0b001a;
         public static final int valX=0x7f0b0012;
         public static final int valY=0x7f0b0013;
         public static final int valZ=0x7f0b0014;

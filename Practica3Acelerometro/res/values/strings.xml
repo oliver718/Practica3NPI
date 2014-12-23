@@ -8,7 +8,14 @@
     <string name="valY">Valor de Y: </string>
     <string name="valZ">Valor de Z: </string>
     <string name="BtnGravedad">Buscar equilibrio</string>
-    <string name="TextoAyuda">Mueva su teléfono hasta que los tres ejes soporten una fuerza de gravedad similar</string>
+    <string name="TextoAyudaGravedad">Mueva su teléfono hasta que los tres ejes soporten una fuerza de gravedad similar</string>
+    <string name="TextoAyudaAccidente">Si su teléfono sufre un choque ó un accidente sonará</string>
     <string name="BtnAccidente">Control de accidente</string>
+    <string name="mayZ">mayor Z: </string>
+    <string name="menZ">menor Z: </string>
+    <string name="mayX">mayor X: </string>
+    <string name="menX">menor X: </string>
+    <string name="mayY">mayor Y: </string>
+    <string name="menY">menor Y: </string>
 
 </resources>

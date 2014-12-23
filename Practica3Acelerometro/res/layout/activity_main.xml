@@ -59,4 +59,46 @@
 	    <requestFocus />
 	</EditText>
 	
+	<TextView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/txtmayX"
+	    android:text="@string/mayX"
+	/>
+	
+	<TextView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/txtmenX"
+	    android:text="@string/menX"
+	/>
+	
+	<TextView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/txtmayY"
+	    android:text="@string/mayY"
+	/>
+	
+	<TextView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/txtmenY"
+	    android:text="@string/menY"
+	/>
+	
+	<TextView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/txtmayZ"
+	    android:text="@string/mayZ"
+	/>
+	
+	<TextView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:id="@+id/txtmenZ"
+	    android:text="@string/menZ"
+	/>
+	
 </LinearLayout>
