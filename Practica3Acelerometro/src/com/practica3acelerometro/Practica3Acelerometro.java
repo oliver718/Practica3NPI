@@ -18,7 +18,7 @@ import android.media.AudioManager;
 public class Practica3Acelerometro extends Activity implements SensorEventListener {
 	SoundManager sound;
 	int tada, alerta;
-	private long last_update = 0, miliInicial = 0, iniSeg = 0, segMov = 0;  //last_movement = 0;
+	private long last_update = 0, miliInicial = 0, iniSeg = 0, segMov = 0;
     private float curX = 0, curY = 0, curZ = 0;
     private float antCurX = 0, antCurY = 0, antCurZ = 0;
     private int igualX = 1, igualY = 2, igualZ = 3;//al inicio serán distintos
@@ -30,48 +30,50 @@ public class Practica3Acelerometro extends Activity implements SensorEventListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);        
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //bloquear la orientación de la pantalla (para que no gire)
         // Creamos una instancia de SoundManager
      	sound = new SoundManager(getApplicationContext());
      	// Set volume rocker mode to media volume
  		this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
- 		// Lee los sonidos que figuran en res/raw
+ 		// Carga los sonidos que figuran en res/raw
          tada = sound.load(R.raw.tada);
          alerta = sound.load(R.raw.alerta);
-         //sound.play(tada);
     }
     
     @Override
     protected void onResume() {
-        super.onResume();
+        super.onResume(); //registro del listener
         SensorManager sm = (SensorManager) getSystemService(SENSOR_SERVICE);
-        List<Sensor> sensors = sm.getSensorList(Sensor.TYPE_ACCELEROMETER);        
+        List<Sensor> sensors = sm.getSensorList(Sensor.TYPE_ACCELEROMETER);  //se utilizará el acelerómetro como sensor      
         if (sensors.size() > 0) {
-        	sm.registerListener(this, sensors.get(0), SensorManager.SENSOR_DELAY_GAME);
+        	//indicar tasa de lectura de datos: 
+        	//“SensorManager.SENSOR_DELAY_GAME” que es la velocidad mínima para que el acelerómetro pueda usarse
+        	sm.registerListener(this, sensors.get(0), SensorManager.SENSOR_DELAY_GAME); 
         } 
     }
     
     @Override
-    protected void onStop() {
+    protected void onStop() { //anular el registro del listener
     	SensorManager sm = (SensorManager) getSystemService(SENSOR_SERVICE);    	
         sm.unregisterListener(this);
         super.onStop();
     }
 
 	@Override
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {} //es llamado cuando la precisión del sensor ha cambiado 
 
 	@Override
-	public void onSensorChanged(SensorEvent event) {
-        synchronized (this) {
+	public void onSensorChanged(SensorEvent event) { //es llamado cuando los valores del sensor han cambiado
+        synchronized (this) { //sincronizar, para evitar problemas de concurrencia
         	long current_time = event.timestamp;
         	long miliActual = (new Date()).getTime() + (event.timestamp - System.nanoTime()) / 1000000L;
             
+        	//obtener los valores de los ejes del acelerometro
             curX = event.values[0];
             curY = event.values[1];
             curZ = event.values[2];
             
-            if (primeraVez) {
+            if (primeraVez) { //ajustar tiempos la primera vez que entra
                 last_update = current_time;
                 miliInicial = (new Date()).getTime() + (event.timestamp - System.nanoTime()) / 1000000L;
                 primeraVez = false;
@@ -85,6 +87,7 @@ public class Practica3Acelerometro extends Activity implements SensorEventListen
                 igualY = (int)curY;
                 igualZ = (int)curZ;
                 
+                //actualizar variables de mayor y menor valor obtenido de los ejes
                 if(curZ > mayZ)
                 	mayZ = curZ;
                 else if(curZ < menZ)
@@ -104,6 +107,7 @@ public class Practica3Acelerometro extends Activity implements SensorEventListen
             if(sonarIgual)
             	sonarIgualActivo();
           
+            //mostrar por pantalla los valores del acelerómetro
             ((TextView) findViewById(R.id.txtAccX)).setText(getResources().getString(R.string.valX) + curX);
             ((TextView) findViewById(R.id.txtAccY)).setText(getResources().getString(R.string.valY) + curY);
             ((TextView) findViewById(R.id.txtAccZ)).setText(getResources().getString(R.string.valZ) + curZ); 
@@ -114,6 +118,8 @@ public class Practica3Acelerometro extends Activity implements SensorEventListen
             ((TextView) findViewById(R.id.txtmayY)).setText(getResources().getString(R.string.mayY) + mayY);
             ((TextView) findViewById(R.id.txtmenY)).setText(getResources().getString(R.string.menY) + menY);
             
+            
+            //controlar si se pulsa alguno de los botones
             setBtnIgual();
             setBtnAccidente();
             
@@ -121,6 +127,7 @@ public class Practica3Acelerometro extends Activity implements SensorEventListen
 		
 	}
 	
+	//Método que reproduce un sonido si los tres ejes del acelerómetro soportan una fuerza de la gravedad similar
 	private void sonarIgualActivo(){
 		if(igualX == igualY && igualX == igualZ){//cuando la gravedad actue de igual manera en los tres ejes sonará
         	sound.play(tada);
@@ -129,23 +136,27 @@ public class Practica3Acelerometro extends Activity implements SensorEventListen
         }
 	}
 	
+	//Método para controlar el control de accidente, entra como parametro el tiempo actual en segundos
 	private void controlAccidenteActivo(long seg){
+		//si se produce un movimiento muy fuerte
 		if((curX > max && curY > max) || (curX > max && curZ > max) || (curY > max && curZ > max) ||
             	(curX < min && curY < min) || (curX < min && curZ < min) || (curY < min && curZ < min)){
             	iniSeg = seg;
             }
-
+			//si despues de producirse el movimiento fuerte han pasado 5 segundos sin que el movil se mueva sonará el pitido
             else if(iniSeg > 0 && (seg - iniSeg) > 5){
             	sound.play(alerta);
             	controlAccidente = false;
             	((EditText)findViewById(R.id.textoAyuda)).setText("");
             }
-            else if(iniSeg > 0){
+            else if(iniSeg > 0){//controlar si el movil se mueve despues del movimiento brusco
+            	//si siguen produciendose movimientos fuertes se reiniciara el tiempo de espera
             	if((curX + 1) < antCurX || (curX - 1) > antCurX || (curY + 1) < antCurY || (curY - 1) > antCurY || 
             		(curZ + 1) < antCurZ || (curZ - 1) > antCurZ){
             		iniSeg = seg;
             		if(segMov == 0)
             			segMov = seg;
+            		//si pasado 10 segundos del movimiento fuerte el movil se mueve suavemente, no sonará el pitido y se reinicia todo
             		else if((seg - segMov) > 10){
             			antCurX = antCurY = antCurZ = iniSeg = segMov = 0;
             			mayZ = menZ = mayX = menX = mayY = menY = 0;
@@ -158,6 +169,7 @@ public class Practica3Acelerometro extends Activity implements SensorEventListen
             antCurZ = curZ;
 	}
 	
+	//Método que controla que se pulse el botón de "Buscar equilibrio"
 	private void setBtnIgual(){
 		Button igualGrav = (Button) findViewById(R.id.btnIgual);
         igualGrav.setOnClickListener(new View.OnClickListener() {
@@ -170,6 +182,7 @@ public class Practica3Acelerometro extends Activity implements SensorEventListen
 		});
 	}
 	
+	//Método que controla que se pulse el botón de "Control de accidente"
 	private void setBtnAccidente(){
 		Button igualGrav = (Button) findViewById(R.id.btnAccidente);
         igualGrav.setOnClickListener(new View.OnClickListener() {
